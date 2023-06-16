@@ -1,0 +1,207 @@
+@font-face {
+  font-family: 'Myriad Pro Light';
+  src: url('fonts/MyriadPro-Light.otf') format('opentype');
+}
+
+:root {
+  --shadow: 0,0,0,0.13;
+  --color-primary: #007299;
+  --color-secondary: #0099cc;
+}
+
+:root {
+  --color-primary: #008080;
+  --color-secondary: #20B2AA;
+}
+
+body {
+    margin: 0;
+    padding: 2%;
+    box-sizing: border-box;
+    display: flex;
+    height: 100vh;
+    justify-content: flex-start;
+    align-items: center;
+    background: linear-gradient(to bottom, var(--color-primary) 35%, #F1F1F5 30%);
+}
+
+.main-container {
+  display: flex;
+  width: 96%;
+  height: 96%;
+}
+
+.sidebar {
+  width: 12%;
+  height: 100%;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 0 15px rgba(var(--shadow));
+  margin-right: 2%;
+  transform: translateY(-3%);
+}
+
+.platform-button, .platform-button:link, .platform-button:visited, .platform-button:hover, .platform-button:active {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  border: none;
+  background-color: #f8f8f8;
+  cursor: pointer;
+  box-sizing: border-box; /* Add this line */
+  text-align: center; /* Add this line */
+}
+
+
+.platform-button:hover {
+  background-color: #e8e8e8;
+}
+
+.chat-container {
+  display: flex;
+  flex-grow: 1;
+  height: 90%;
+}
+
+.chat-log {
+  flex-grow: 1;
+  background-color: #fff;
+  border-radius: 35px 35px 15px 15px;
+  box-shadow: 0 0 15px rgba(var(--shadow));
+  font-family: 'Myriad Pro Light', Arial, sans-serif;
+  margin-right: 2%;
+  transform: translateY(2%);
+}
+
+.chat-header {
+  background-color: var(--color-secondary);
+  padding: 30px;
+  color: white;
+  border-radius: 25px 25px 0 0;
+  font-family: 'Myriad Pro Light', Arial, sans-serif;
+  font-weight: bold;
+  font-size: 25px;
+}
+
+.chat-content {
+  padding: 20px;
+}
+
+.user-container {
+  width: 20%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.user-creation {
+  height: 18%;
+  background-color: #fff;
+  padding: 30px 10px 10px 20px; /* left padding set to 20px */
+  border-radius: 15px;
+  box-shadow: 0 0 15px rgba(var(--shadow));
+  margin-bottom: 5%;
+}
+
+
+.user-selection {
+  flex-grow: 1;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 0 15px rgba(var(--shadow));
+  overflow-y: auto; /* Add scroll when necessary */
+  max-height: 70vh; /* Set a maximum height */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+}
+
+/* Chrome, Safari, Edge */
+.user-selection::-webkit-scrollbar {
+  display: none;
+}
+
+.user-button {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  border: none;
+  background-color: #f8f8f8;
+  cursor: pointer;
+  border-radius: 20px;
+  margin-bottom: 10px;
+  box-shadow: var(--shadow);
+}
+
+.user-button:hover {
+  background-color: #e8e8e8;
+}
+
+.close-button {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  color: red;
+  font-weight: bold;
+}
+
+.input-field {
+  width: 80%; /* You can adjust this to suit your design */
+  padding: 10px; /* This will make the text input field taller */
+  border-radius: 25px; /* This gives the input field rounded edges */
+  border: 1px solid var(--color-primary); /* Adds a border color */
+  font-size: 1.2em; /* Increases the font size */
+}
+
+.create-button {
+  margin-top: 20px; /* Adjust this value to increase/decrease the space */
+}
+
+.current-user-title {
+  font-family: 'Myriad Pro Light', Arial, sans-serif;
+  font-size: 24px; /* Adjust the size as needed */
+  color: var(--color-primary); /* Use the primary color */
+  text-transform: uppercase; /* Make the text all uppercase */
+  letter-spacing: 1.5px; /* Increase spacing between letters */
+}
+
+.switch-button {
+  font-family: 'Myriad Pro Light', Arial, sans-serif;
+  padding: 10px 20px; /* Padding makes the button larger */
+  border: none; /* Removes the default button border */
+  border-radius: 25px; /* Gives the button rounded edges */
+  background-color: var(--color-primary); /* Sets the button color */
+  color: white; /* Sets the button text color */
+  cursor: pointer; /* Changes the mouse cursor when hovering over the button */
+  transition: background-color 0.3s ease; /* Smooth color transition when hovering over the button */
+}
+
+.switch-button:hover {
+  background-color: var(--color-secondary); /* Changes color when hovered */
+}
+
+.user-name {
+  font-family: 'Myriad Pro Light', Arial, sans-serif;
+  font-size: 1.2em;
+  color: var(--color-primary);
+  max-width: 50%; /* Adjust this to control how much of the .user-button width the name can take up */
+  white-space: normal; /* This will allow text to wrap onto a new line at spaces */
+}
+
+#status-messages {
+    flex-grow: 1;
+    background-color: #fff;
+    border-radius: 35px 35px 15px 15px;
+    box-shadow: 0 0 15px rgba(var(--shadow));
+    font-family: 'Myriad Pro Light', Arial, sans-serif;
+    margin-right: 2%;
+    transform: translateY(2%);
+    padding: 20px;  /* From .chat-content */
+    display: none;  /* Initially hidden */
+}

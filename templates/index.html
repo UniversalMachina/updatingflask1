@@ -1,0 +1,78 @@
+<!doctype html>
+<head>
+   <title>Manage Users</title>
+   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/FitText.js/1.2.0/jquery.fittext.min.js"></script>
+<script src="{{ url_for('static', filename='main.js') }}"></script>
+
+
+</head>
+<body>
+   <div class="main-container">
+      <div class="sidebar">
+         <a href="{{ url_for('linkedin') }}" class="platform-button">LinkedIn</a>
+         <a href="{{ url_for('ziprecruiter') }}" class="platform-button">ZipRecruiter</a>
+         <button id="status-btn" class="platform-button">Status Message</button>
+      </div>
+      <!--<div class="sidebar">-->
+      <!--  <a href="{{ url_for('linkedin') }}" class="platform-button">LinkedIn</a>-->
+      <!--  <a href="{{ url_for('ziprecruiter') }}" class="platform-button">ZipRecruiter</a>-->
+      <!--</div>-->
+      <div id="chat-container" class="chat-container">
+         <div class="chat-log" id="chat-log">
+            <div class="chat-header">Chat Header</div>
+            <div class="chat-content">
+               <p id="chat-text">{{ chat_log }}</p>
+            </div>
+         </div>
+
+      </div>
+
+<div id="status-messages" style="display: none;">
+  <p id="status-r">Status Message R</p>
+  <p id="status-c">Status Message C</p>
+</div>
+
+
+
+                <div class="user-container">
+            <div class="user-creation">
+               <form class="user-action-form" data-action="create" method="post">
+                  <input type="hidden" name="action" value="create">
+                  <input type="text" name="new_username" placeholder="New username" class="input-field">
+                  <input type="submit" value="Create User" class="user-button create-button">
+               </form>
+            </div>
+            <div class="user-selection">
+               <h2 class="current-user-title">Current User: {{ current_user or 'None' }}</h2>
+               <!--              <ul>-->
+               {% for user in users %}
+               <div class="user-button">
+                  <span class="user-name">{{ user }}</span> <!-- Wrap the user text -->
+                  <div class="button-container">
+                     <!-- Wrap the buttons -->
+   <form class="user-action-form" data-action="switch" method="post">
+    <input type="hidden" name="action" value="switch">
+    <input type="hidden" name="username" value="{{ user }}">
+    <input type="submit" value="Switch" class="switch-button">
+</form>
+<form class="user-action-form" data-action="delete" method="post">
+    <input type="hidden" name="action" value="delete">
+    <input type="hidden" name="username" value="{{ user }}">
+    <input type="submit" value="X" class="close-button">
+</form>
+                  </div>
+               </div>
+               {% endfor %}
+               <!--    </ul>-->
+               {% if message %}
+               <div>
+                  <p>{{ message }}</p>
+               </div>
+               {% endif %}
+            </div>
+         </div>
+
+   </div>
+</body>
