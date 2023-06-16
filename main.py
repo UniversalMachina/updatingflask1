@@ -26,12 +26,19 @@ def index():
         action = request.form.get('action')
         if action == 'create':
             username = request.form['new_username']
-            if username in users:
+            if not username.strip():
+                message = 'Username cannot be blank'
+            elif username in users:
                 message = 'Username already exists'
             else:
                 users[username] = generate_password_hash(username)
                 save_users(users)
                 os.makedirs(f'./{username}', exist_ok=True)
+
+                # Creating 'r.txt' and 'c.txt' in the user's directory
+                with open(f'./{username}/r.txt', 'w') as r_file, open(f'./{username}/c.txt', 'w') as c_file:
+                    pass  # You can write something to the files here if needed
+
                 session['username'] = username
                 message = f'User {username} created'
         elif action == 'switch':
@@ -52,10 +59,6 @@ def index():
                 message = f'User {username} deleted'
             else:
                 message = 'User does not exist'
-        if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
-            # Return a JSON response if the request was made via AJAX
-            return jsonify(users=list(users.keys()), current_user=session.get('username'), message=message)
-
     return render_template('index.html', users=users, current_user=session.get('username'), message=message, chat_log=chat_log)
 
 @app.route('/linkedin', methods=['GET'])
@@ -82,6 +85,38 @@ def status():
             return 'Invalid'
 
     return {'r': check_file('r.txt'), 'c': check_file('c.txt')}
+
+@app.route('/get_user_files', methods=['GET'])
+def get_user_files():
+    username = session.get('username')
+    if username:
+        try:
+            with open(f'./{username}/r.txt', 'r') as r_file:
+                r_data = r_file.read()
+            with open(f'./{username}/c.txt', 'r') as c_file:
+                c_data = c_file.read()
+        except FileNotFoundError:
+            return jsonify({'error': 'Files not found'}), 404
+
+        return jsonify({'r': r_data, 'c': c_data})
+    else:
+        return jsonify({'error': 'No user is currently logged in'}), 403
+
+@app.route('/save_user_files', methods=['POST'])
+def save_user_files():
+    username = session.get('username')
+    if username:
+        data = request.get_json()
+        try:
+            with open(f'./{username}/r.txt', 'w') as r_file:
+                r_file.write(data.get('r', ''))
+            with open(f'./{username}/c.txt', 'w') as c_file:
+                c_file.write(data.get('c', ''))
+        except FileNotFoundError:
+            return jsonify({'error': 'Files not found'}), 404
+        return jsonify({'message': 'Files saved successfully'})
+    else:
+        return jsonify({'error': 'No user is currently logged in'}), 403
 
 
 if __name__ == '__main__':

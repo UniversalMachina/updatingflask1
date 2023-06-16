@@ -46,37 +46,32 @@ $(document).ready(function() {
 
 
 $(document).ready(function() {
-    $(".user-action-form").submit(function(e) {
-        e.preventDefault();  // Prevent the default form submission action
+  var username = 'your_username';  // Replace this with the actual username
 
-        var form = $(this);
-        var action = form.data('action');  // Get the action type
-        var formData = form.serialize();  // Serialize the form data
-
-        $.ajax({
-            type: 'POST',
-            url: '/',
-            data: formData,
-            success: function(response) {
-                // Handle the response from the server
-                // Update the page content based on the response
-                // Supposing response is something like {users: [...], current_user: 'user', message: '...'}
-
-                // Update user list
-                let userContainer = $(".user-container");
-                userContainer.empty();  // Clear the current list
-                response.users.forEach(function(user) {
-                    // Create new user button for each user and append to the container
-                    let userButton = `<div class="user-button">${user}</div>`;
-                    userContainer.append(userButton);
-                });
-
-                // Update current user display
-                $(".current-user-title").text('Current User: ' + response.current_user);
-
-                // Show a message about the action
-                alert(response.message);
-            }
-        });
+  $("#display-r-btn").click(function() {
+    $.getJSON('/get_user_files', function(data) {
+      $("#r-content").val(data.r);
     });
+  });
+
+  $("#display-c-btn").click(function() {
+    $.getJSON('/get_user_files', function(data) {
+      $("#c-content").val(data.c);
+    });
+  });
+
+  $("#save-btn").click(function() {
+    $.ajax({
+      url: '/save_user_files',
+      type: 'POST',
+      contentType: 'application/json',
+      data: JSON.stringify({
+        r: $("#r-content").val(),
+        c: $("#c-content").val()
+      }),
+      success: function(response) {
+        alert("Files saved successfully.");
+      }
+    });
+  });
 });

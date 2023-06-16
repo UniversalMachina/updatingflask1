@@ -29,16 +29,28 @@
 
       </div>
 
+
 <div id="status-messages" style="display: none;">
-  <p id="status-r">Status Message R</p>
-  <p id="status-c">Status Message C</p>
+   <p id="status-r">Status Message R</p>
+   <p id="status-c">Status Message C</p>
+
+   <button id="display-r-btn">Display R.txt</button>
+   <button id="display-c-btn">Display C.txt</button>
+
+   <div id="file-contents">
+      <textarea id="r-content"></textarea>
+      <textarea id="c-content"></textarea>
+   </div>
+
+   <button id="save-btn">Save</button>
 </div>
+
 
 
 
                 <div class="user-container">
             <div class="user-creation">
-               <form class="user-action-form" data-action="create" method="post">
+               <form method="post">
                   <input type="hidden" name="action" value="create">
                   <input type="text" name="new_username" placeholder="New username" class="input-field">
                   <input type="submit" value="Create User" class="user-button create-button">
@@ -52,16 +64,16 @@
                   <span class="user-name">{{ user }}</span> <!-- Wrap the user text -->
                   <div class="button-container">
                      <!-- Wrap the buttons -->
-   <form class="user-action-form" data-action="switch" method="post">
-    <input type="hidden" name="action" value="switch">
-    <input type="hidden" name="username" value="{{ user }}">
-    <input type="submit" value="Switch" class="switch-button">
-</form>
-<form class="user-action-form" data-action="delete" method="post">
-    <input type="hidden" name="action" value="delete">
-    <input type="hidden" name="username" value="{{ user }}">
-    <input type="submit" value="X" class="close-button">
-</form>
+                     <form method="post" style="display:inline">
+                        <input type="hidden" name="action" value="switch">
+                        <input type="hidden" name="username" value="{{ user }}">
+                        <input type="submit" value="Switch" class="switch-button">
+                     </form>
+                     <form method="post" style="display:inline">
+                        <input type="hidden" name="action" value="delete">
+                        <input type="hidden" name="username" value="{{ user }}">
+                        <input type="submit" value="X" class="close-button">
+                     </form>
                   </div>
                </div>
                {% endfor %}

@@ -205,3 +205,66 @@ body {
     padding: 20px;  /* From .chat-content */
     display: none;  /* Initially hidden */
 }
+
+/* Existing CSS */
+
+/* ... Your existing CSS ... */
+
+/* New CSS */
+
+
+
+#status-messages p {
+  color: #4a4a4a;
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+
+#status-messages button {
+  text-decoration: none;
+  color: #4a4a4a;
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  border: none;
+  background-color: #f8f8f8;
+  cursor: pointer;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+#status-messages button:hover {
+  background-color: #e8e8e8;
+}
+
+#file-contents {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-top: 10px;
+  width: 100%;
+}
+
+
+#file-contents textarea {
+  height: 220px;  /* Increased height */
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  width: 100%;
+  box-sizing: border-box;
+  resize: none;  /* Disable resize */
+}
+
+#save-btn {
+  margin-top: 10px;
+  background-color: #4a4a4a;
+  color: #fff;
+}
+
+#save-btn:hover {
+  background-color: #333;
+}
