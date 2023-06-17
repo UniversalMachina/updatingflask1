@@ -173,9 +173,13 @@ socketio = SocketIO(app, cors_allowed_origins="*")
 app.secret_key = os.urandom(24)
 
 chat_logs = {
-    'linkedin': '',
-    'ziprecruiter': '',
+    'linkedin': [],
+    'ziprecruiter': [],
 }
+
+
+
+
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -186,31 +190,38 @@ def index():
 
 @app.route('/linkedin', methods=['GET'])
 def linkedin():
-    chat_log = "This is the LinkedIn chat log."
-    return jsonify(chat_log=chat_log)  # return JSON data
+    return jsonify(chat_log=chat_logs['linkedin'])  # return JSON data
+
 
 @app.route('/ziprecruiter', methods=['GET'])
 def ziprecruiter():
-    chat_log = "This is the ZipRecruiter chat log."
-    return jsonify(chat_log=chat_log)  # return JSON data
-
-
-def send_messages():
-    while True:
-        # Emit a new message for LinkedIn
-        socketio.emit('new_message', {'platform': 'linkedin', 'message': 'This is a new LinkedIn message.'})
-        # Emit a new message for ZipRecruiter
-        socketio.emit('new_message', {'platform': 'ziprecruiter', 'message': 'This is a new ZipRecruiter message.'})
-        socketio.sleep(5)
-        print("hello")
-
-
-socketio.start_background_task(send_messages)
+    return jsonify(chat_log=chat_logs['ziprecruiter'])  # return JSON data
 
 
 @socketio.on('connect')
 def handle_connect():
     print('Client connected')
+
+def send_messages():
+    while True:
+        # Add a new message for LinkedIn
+        chat_logs['linkedin'].append('This is a new LinkedIn message.')
+        # Add a new message for ZipRecruiter
+        chat_logs['ziprecruiter'].append('This is a new ZipRecruiter message.')
+
+        # Emit a new message event for both platforms
+        socketio.emit('new_message', {'platform': 'linkedin', 'message': chat_logs['linkedin'][-1]})
+        print("linkedin message")
+        socketio.emit('new_message', {'platform': 'ziprecruiter', 'message': chat_logs['ziprecruiter'][-1]})
+        print("ziprecruiter message")
+
+        socketio.sleep(5)
+
+
+socketio.start_background_task(send_messages)
+
+
+
 
 
 if __name__ == '__main__':
