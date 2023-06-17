@@ -17,7 +17,8 @@
 <a href="{{ url_for('ziprecruiter') }}" class="platform-button" data-platform="ziprecruiter" data-chat-log="ziprecruiter-chat-text">ZipRecruiter</a>
 
 
-         <button id="status-btn" class="platform-button">Status Message</button>
+      <button id="status-btn" class="platform-button status-button">Status Message</button>
+
       </div>
       <!--<div class="sidebar">-->
       <!--  <a href="{{ url_for('linkedin') }}" class="platform-button">LinkedIn</a>-->
@@ -34,79 +35,73 @@
          </div>
 
 
+ </div>
 
-          </div>
-       </div>
+
+
+
+
+
+
+
+
+
+
+<div id="status-messages" style="display: none;">
+   <p id="status-r">Status Message R</p>
+   <p id="status-c">Status Message C</p>
+
+   <button id="display-r-btn">Display R.txt</button>
+   <button id="display-c-btn">Display C.txt</button>
+
+   <div id="file-contents">
+      <textarea id="r-content"></textarea>
+      <textarea id="c-content"></textarea>
+   </div>
+
+   <button id="save-btn">Save</button>
+</div>
+
+
+
+
+                <div class="user-container">
+            <div class="user-creation">
+               <form method="post">
+                  <input type="hidden" name="action" value="create">
+                  <input type="text" name="new_username" placeholder="New username" class="input-field">
+                  <input type="submit" value="Create User" class="user-button create-button">
+               </form>
+            </div>
+            <div class="user-selection">
+               <h2 class="current-user-title">Current User: {{ current_user or 'None' }}</h2>
+               <!--              <ul>-->
+               {% for user in users %}
+               <div class="user-button">
+                  <span class="user-name">{{ user }}</span> <!-- Wrap the user text -->
+                  <div class="button-container">
+                     <!-- Wrap the buttons -->
+                     <form method="post" style="display:inline">
+                        <input type="hidden" name="action" value="switch">
+                        <input type="hidden" name="username" value="{{ user }}">
+                        <input type="submit" value="Switch" class="switch-button">
+                     </form>
+                     <form method="post" style="display:inline">
+                        <input type="hidden" name="action" value="delete">
+                        <input type="hidden" name="username" value="{{ user }}">
+                        <input type="submit" value="X" class="close-button">
+                     </form>
+                  </div>
+               </div>
+               {% endfor %}
+               <!--    </ul>-->
+               {% if message %}
+               <div>
+                  <p>{{ message }}</p>
+               </div>
+               {% endif %}
+            </div>
+         </div>
+
+   </div>
 </body>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!--<div id="status-messages" style="display: none;">-->
-<!--   <p id="status-r">Status Message R</p>-->
-<!--   <p id="status-c">Status Message C</p>-->
-
-<!--   <button id="display-r-btn">Display R.txt</button>-->
-<!--   <button id="display-c-btn">Display C.txt</button>-->
-
-<!--   <div id="file-contents">-->
-<!--      <textarea id="r-content"></textarea>-->
-<!--      <textarea id="c-content"></textarea>-->
-<!--   </div>-->
-
-<!--   <button id="save-btn">Save</button>-->
-<!--</div>-->
-
-
-
-
-<!--                <div class="user-container">-->
-<!--            <div class="user-creation">-->
-<!--               <form method="post">-->
-<!--                  <input type="hidden" name="action" value="create">-->
-<!--                  <input type="text" name="new_username" placeholder="New username" class="input-field">-->
-<!--                  <input type="submit" value="Create User" class="user-button create-button">-->
-<!--               </form>-->
-<!--            </div>-->
-<!--            <div class="user-selection">-->
-<!--               <h2 class="current-user-title">Current User: {{ current_user or 'None' }}</h2>-->
-<!--               &lt;!&ndash;              <ul>&ndash;&gt;-->
-<!--               {% for user in users %}-->
-<!--               <div class="user-button">-->
-<!--                  <span class="user-name">{{ user }}</span> &lt;!&ndash; Wrap the user text &ndash;&gt;-->
-<!--                  <div class="button-container">-->
-<!--                     &lt;!&ndash; Wrap the buttons &ndash;&gt;-->
-<!--                     <form method="post" style="display:inline">-->
-<!--                        <input type="hidden" name="action" value="switch">-->
-<!--                        <input type="hidden" name="username" value="{{ user }}">-->
-<!--                        <input type="submit" value="Switch" class="switch-button">-->
-<!--                     </form>-->
-<!--                     <form method="post" style="display:inline">-->
-<!--                        <input type="hidden" name="action" value="delete">-->
-<!--                        <input type="hidden" name="username" value="{{ user }}">-->
-<!--                        <input type="submit" value="X" class="close-button">-->
-<!--                     </form>-->
-<!--                  </div>-->
-<!--               </div>-->
-<!--               {% endfor %}-->
-<!--               &lt;!&ndash;    </ul>&ndash;&gt;-->
-<!--               {% if message %}-->
-<!--               <div>-->
-<!--                  <p>{{ message }}</p>-->
-<!--               </div>-->
-<!--               {% endif %}-->
-<!--            </div>-->
-<!--         </div>-->
-
-<!--   </div>-->
-<!--</body>-->
