@@ -75,3 +75,81 @@ $("#display-r-btn, #display-c-btn").click(function() {
     chat_textarea.scrollTop(chat_textarea[0].scrollHeight);
   });
 });
+
+
+
+
+$(document).ready(function() {
+  $('.user-creation form').on('submit', function(event) {
+    event.preventDefault(); // Prevent form submission and page reload
+
+    // Serialize form data for AJAX request
+    var formData = $(this).serialize();
+
+    // Make AJAX request
+    $.ajax({
+      type: 'POST',
+      url: '/ajax', // Update this if your form should submit somewhere else
+      data: formData,
+      success: function(response) {
+        // Update the UI based on the response
+        if (response.success) {
+            var newUserHtml = `
+                <div class="user-button">
+                    <span class="user-name">${response.newUser}</span>
+                    <div class="button-container">
+                        <form method="post" style="display:inline">
+                            <input type="hidden" name="action" value="switch">
+                            <input type="hidden" name="username" value="${response.newUser}">
+                            <input type="submit" value="Switch" class="switch-button">
+                        </form>
+                        <form method="post" style="display:inline">
+                            <input type="hidden" name="action" value="delete">
+                            <input type="hidden" name="username" value="${response.newUser}">
+                            <input type="submit" value="X" class="close-button">
+                        </form>
+                    </div>
+                </div>`;
+
+            $('.users').append(newUserHtml);
+        }
+      },
+      error: function(error) {
+        // Handle error
+        console.log(error);
+      }
+    });
+  });
+});
+
+
+$(document).ready(function() {
+  $('.user-button form').on('submit', function(event) {
+    event.preventDefault(); // Prevent form submission and page reload
+
+    // Serialize form data for AJAX request
+    var formData = $(this).serialize();
+
+    // Make AJAX request
+    $.ajax({
+      type: 'POST',
+      url: '/switch_user',
+      data: formData,
+      success: function(response) {
+        // Update the UI based on the response
+        if (response.success) {
+          // Show switched user (you may want to reflect this change on the UI)
+          alert('Switched to user: ' + response.switchedUser);
+        }
+        else {
+          // Show the error message
+          alert(response.message);
+        }
+      },
+      error: function(error) {
+        // Handle error
+        console.log(error);
+      }
+    });
+  });
+});

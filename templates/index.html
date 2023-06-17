@@ -65,43 +65,44 @@
 
 
 
-                <div class="user-container">
-            <div class="user-creation">
-               <form method="post">
-                  <input type="hidden" name="action" value="create">
-                  <input type="text" name="new_username" placeholder="New username" class="input-field">
-                  <input type="submit" value="Create User" class="user-button create-button">
-               </form>
-            </div>
-            <div class="user-selection">
-               <h2 class="current-user-title">Current User: {{ current_user or 'None' }}</h2>
-               <!--              <ul>-->
-               {% for user in users %}
-               <div class="user-button">
-                  <span class="user-name">{{ user }}</span> <!-- Wrap the user text -->
-                  <div class="button-container">
-                     <!-- Wrap the buttons -->
-                     <form method="post" style="display:inline">
+<div class="user-container">
+    <div class="user-creation">
+        <form method="post">
+            <input type="hidden" name="action" value="create">
+            <input type="text" name="new_username" placeholder="New username" class="input-field">
+            <input type="submit" value="Create User" class="user-button create-button">
+        </form>
+    </div>
+    <div class="user-selection">
+        <h2 class="current-user-title">Current User: {{ current_user or 'None' }}</h2>
+        <div class="users">
+            <!-- This div contains all users, new users should be appended here -->
+            {% for user in users %}
+            <div class="user-button">
+                <span class="user-name">{{ user }}</span> <!-- Wrap the user text -->
+                <div class="button-container">
+                    <!-- Wrap the buttons -->
+                    <form method="post" style="display:inline">
                         <input type="hidden" name="action" value="switch">
                         <input type="hidden" name="username" value="{{ user }}">
                         <input type="submit" value="Switch" class="switch-button">
-                     </form>
-                     <form method="post" style="display:inline">
+                    </form>
+                    <form method="post" style="display:inline">
                         <input type="hidden" name="action" value="delete">
                         <input type="hidden" name="username" value="{{ user }}">
                         <input type="submit" value="X" class="close-button">
-                     </form>
-                  </div>
-               </div>
-               {% endfor %}
-               <!--    </ul>-->
-               {% if message %}
-               <div>
-                  <p>{{ message }}</p>
-               </div>
-               {% endif %}
+                    </form>
+                </div>
             </div>
-         </div>
+            {% endfor %}
+        </div>
+        {% if message %}
+        <div>
+            <p>{{ message }}</p>
+        </div>
+        {% endif %}
+    </div>
+</div>
 
    </div>
 </body>

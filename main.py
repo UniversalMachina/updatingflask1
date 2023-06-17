@@ -71,6 +71,38 @@ def index():
                 message = 'User does not exist'
     return render_template('index.html', users=users, current_user=session.get('username'), message=message, chat_log=chat_log)
 
+@app.route('/switch_user', methods=['POST'])
+def switch_user():
+    username = request.form['username']
+    users = load_users()
+    if username in users:
+        session['username'] = username
+        return jsonify(success=True, switchedUser=username)
+    else:
+        return jsonify(success=False, message='User does not exist')
+
+
+@app.route('/ajax', methods=['POST'])
+def ajax_request():
+    username = request.form['new_username']  # Make sure you're sending this from the client
+    users = load_users()
+    if not username.strip():
+        return jsonify(success=False, message='Username cannot be blank')
+    elif username in users:
+        return jsonify(success=False, message='Username already exists')
+    else:
+        users[username] = generate_password_hash(username)
+        save_users(users)
+        os.makedirs(f'./{username}', exist_ok=True)
+
+        # Creating 'r.txt' and 'c.txt' in the user's directory
+        with open(f'./{username}/r.txt', 'w') as r_file, open(f'./{username}/c.txt', 'w') as c_file:
+            pass  # You can write something to the files here if needed
+
+        return jsonify(success=True, newUser=username)
+
+
+
 
 @app.route('/status', methods=['GET'])
 def status():
