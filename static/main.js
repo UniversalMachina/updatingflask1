@@ -75,3 +75,34 @@ $(document).ready(function() {
     });
   });
 });
+
+
+//var socket = io.connect('http://localhost:5000');
+//
+//
+//socket.on('new_message', function(msg) {
+//    console.log('New message:', msg);
+//    // get the chat textarea and append the new message to its content
+//    var chat_textarea = document.getElementById('chat-text');
+//    chat_textarea.value += '\n' + msg;
+//});
+
+
+var currentPlatform = 'linkedin';
+
+document.querySelector('[data-platform="linkedin"]').addEventListener('click', function() {
+    document.getElementById(currentPlatform + '-chat-text').style.display = 'none';
+    currentPlatform = 'linkedin';
+    document.getElementById(currentPlatform + '-chat-text').style.display = 'block';
+});
+
+document.querySelector('[data-platform="ziprecruiter"]').addEventListener('click', function() {
+    document.getElementById(currentPlatform + '-chat-text').style.display = 'none';
+    currentPlatform = 'ziprecruiter';
+    document.getElementById(currentPlatform + '-chat-text').style.display = 'block';
+});
+
+socket.on('new_message', function(data) {
+    var chat_textarea = document.getElementById(data.platform + '-chat-text');
+    chat_textarea.value += '\n' + data.message;
+});

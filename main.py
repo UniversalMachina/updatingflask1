@@ -2,9 +2,19 @@ from flask import Flask, session, redirect, url_for, escape, request, render_tem
 from werkzeug.security import generate_password_hash, check_password_hash
 import os, json, shutil
 from flask import jsonify  # import jsonify
+from flask import Flask, render_template, jsonify, request
+from flask_socketio import SocketIO, send, emit
+
 app = Flask(__name__)
+socketio = SocketIO(app, cors_allowed_origins="*")
 
 app.secret_key = os.urandom(24)
+
+chat_logs = {
+    'linkedin': '',
+    'ziprecruiter': '',
+}
+
 
 def load_users():
     if os.path.exists('users.json'):
@@ -118,6 +128,23 @@ def save_user_files():
     else:
         return jsonify({'error': 'No user is currently logged in'}), 403
 
+def send_messages():
+    while True:
+        # Emit a new message for LinkedIn
+        socketio.emit('new_message', {'platform': 'linkedin', 'message': 'This is a new LinkedIn message.'})
+        # Emit a new message for ZipRecruiter
+        socketio.emit('new_message', {'platform': 'ziprecruiter', 'message': 'This is a new ZipRecruiter message.'})
+        socketio.sleep(5)
+        print("hello")
+
+
+socketio.start_background_task(send_messages)
+
+
+@socketio.on('connect')
+def handle_connect():
+    print('Client connected')
+
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    socketio.run(app, debug=True, allow_unsafe_werkzeug=True)
