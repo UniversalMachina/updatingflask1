@@ -14,8 +14,6 @@ chat_logs = {
     'linkedin': '',
     'ziprecruiter': '',
 }
-
-
 def load_users():
     if os.path.exists('users.json'):
         with open('users.json') as f:
@@ -148,3 +146,61 @@ def handle_connect():
 
 if __name__ == '__main__':
     socketio.run(app, debug=True, allow_unsafe_werkzeug=True)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# from werkzeug.security import generate_password_hash, check_password_hash
+# import os, json, shutil
+# from flask import jsonify  # import jsonify
+# from flask import Flask, render_template, jsonify, request
+# from flask_socketio import SocketIO, send, emit
+#
+# app = Flask(__name__)
+# socketio = SocketIO(app, cors_allowed_origins="*")
+#
+# app.secret_key = os.urandom(24)
+#
+# chat_logs = {
+#     'linkedin': '',
+#     'ziprecruiter': '',
+# }
+#
+# @app.route('/', methods=['GET', 'POST'])
+# def index():
+#     message = ''
+#     chat_log = "Chat Log Dummy Text. This is where your chat logs will appear. User interaction logs and other relevant information will be displayed here."
+#
+#     return render_template('index.html', current_user=session.get('username'), message=message, chat_log=chat_log)
+#
+#
+# def send_messages():
+#     while True:
+#         # Emit a new message for LinkedIn
+#         socketio.emit('new_message', {'platform': 'linkedin', 'message': 'This is a new LinkedIn message.'})
+#         # Emit a new message for ZipRecruiter
+#         socketio.emit('new_message', {'platform': 'ziprecruiter', 'message': 'This is a new ZipRecruiter message.'})
+#         socketio.sleep(5)
+#         print("hello")
+#
+#
+# socketio.start_background_task(send_messages)
+#
+#
+# @socketio.on('connect')
+# def handle_connect():
+#     print('Client connected')
+#
+#
+# if __name__ == '__main__':
+#     socketio.run(app, debug=True, allow_unsafe_werkzeug=True)
